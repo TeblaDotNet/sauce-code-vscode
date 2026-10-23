@@ -1,0 +1,309 @@
+{
+  "name": "Sauce Code",
+  "scopeName": "source.opensauce",
+  "patterns": [
+    {
+      "begin": "^\\s*(::)(source)\\s*(?=#|$)",
+      "end": "(?=^\\s*::)",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.control.section.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "begin": "^<<<$",
+          "end": "^>>>$",
+          "name": "meta.original-source.opensauce",
+          "contentName": "string.unquoted.raw.opensauce",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.source.begin.opensauce"
+            }
+          },
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.source.end.opensauce"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "begin": "^\\s*(::)(equipment)\\s*(?=#|$)",
+      "end": "(?=^\\s*::)",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.control.section.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#equipment"
+        },
+        {
+          "include": "#operators"
+        },
+        {
+          "include": "#value"
+        }
+      ]
+    },
+    {
+      "begin": "^\\s*(::)(recipe)\\s*(?=#|$)",
+      "end": "(?=^\\s*::)",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.control.section.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "match": "^\\s*[^:#]+:",
+          "name": "entity.other.attribute-name.metadata.opensauce"
+        },
+        {
+          "include": "#value"
+        }
+      ]
+    },
+    {
+      "begin": "^\\s*(::)(story|notes)\\s*(?=#|$)",
+      "end": "(?=^\\s*::)",
+      "beginCaptures": {
+        "0": {
+          "name": "keyword.control.section.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        }
+      ]
+    },
+    {
+      "match": "^\\s*::[^#\\r\\n]+",
+      "name": "keyword.control.section.opensauce"
+    },
+    {
+      "include": "#code"
+    }
+  ],
+  "repository": {
+    "literal": {
+      "patterns": [
+        {
+          "match": "!\\[[^\\]]*\\]\\([^)]*\\)",
+          "name": "markup.underline.link.image.opensauce"
+        },
+        {
+          "match": "https?://\\S+",
+          "name": "markup.underline.link.opensauce"
+        }
+      ]
+    },
+    "comment": {
+      "match": "#.*$",
+      "name": "comment.line.number-sign.opensauce"
+    },
+    "thing": {
+      "name": "variable.other.thing.opensauce",
+      "begin": "\\(",
+      "end": "\\)|$",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.thing.begin.opensauce"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.thing.end.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "begin": "@\\s*([!~])?",
+          "end": "(?=[,)])|$",
+          "name": "string.unquoted.product.opensauce",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.operator.product.opensauce"
+            }
+          }
+        },
+        {
+          "begin": ",",
+          "end": "(?=\\))|$",
+          "name": "meta.qualifier.opensauce",
+          "patterns": [
+            {
+              "include": "#literal"
+            },
+            {
+              "include": "#comment"
+            }
+          ]
+        },
+        {
+          "match": "[;:]\\s*[^;:@,)#]+",
+          "name": "entity.name.type.variant-part.opensauce"
+        }
+      ]
+    },
+    "equipment": {
+      "name": "support.type.equipment.opensauce",
+      "begin": "\\(",
+      "end": "\\)|$",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.thing.begin.opensauce"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.thing.end.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "begin": "@\\s*([!~])?",
+          "end": "(?=[,)])|$",
+          "name": "string.unquoted.product.opensauce",
+          "beginCaptures": {
+            "0": {
+              "name": "keyword.operator.product.opensauce"
+            }
+          }
+        },
+        {
+          "begin": ",",
+          "end": "(?=\\))|$",
+          "name": "meta.qualifier.opensauce",
+          "patterns": [
+            {
+              "include": "#literal"
+            },
+            {
+              "include": "#comment"
+            }
+          ]
+        },
+        {
+          "match": "[;:]\\s*[^;:@,)#]+",
+          "name": "entity.name.type.variant-part.opensauce"
+        }
+      ]
+    },
+    "action": {
+      "begin": "<(?!<)",
+      "end": ">|$",
+      "name": "meta.action.opensauce",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.action.begin.opensauce"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.action.end.opensauce"
+        }
+      },
+      "patterns": [
+        {
+          "match": "(?<=<)[^,>#]+",
+          "name": "support.function.action.opensauce"
+        },
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#thing"
+        },
+        {
+          "include": "#result"
+        },
+        {
+          "include": "#value"
+        },
+        {
+          "include": "#operators"
+        }
+      ]
+    },
+    "result": {
+      "match": "\\{[^}\\r\\n]*\\}",
+      "name": "constant.other.result.opensauce"
+    },
+    "operators": {
+      "match": "\\?=|-OR-|[+=/]",
+      "name": "keyword.operator.opensauce"
+    },
+    "value": {
+      "match": "(?<![\\w.])(?:~~|~|!)?(?:\\d+\\s+\\d+/\\d+|\\d+(?:\\.\\d+)?(?:/\\d+)?)\\s*(?:(?i:US fl oz|US cups?|cups?|tbsp|tsp|kg|mg|ml|lb|oz|g|l|°?[CF]|h|m|s)\\b)?",
+      "name": "constant.numeric.value.opensauce"
+    },
+    "code": {
+      "patterns": [
+        {
+          "include": "#literal"
+        },
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#thing"
+        },
+        {
+          "include": "#action"
+        },
+        {
+          "include": "#result"
+        },
+        {
+          "match": "^\\s*(Optional|Meanwhile|Repeat)(?=\\s*\\[)",
+          "name": "keyword.control.opensauce"
+        },
+        {
+          "match": "[\\[\\]]",
+          "name": "punctuation.section.group.opensauce"
+        },
+        {
+          "include": "#value"
+        },
+        {
+          "include": "#operators"
+        }
+      ]
+    }
+  }
+}

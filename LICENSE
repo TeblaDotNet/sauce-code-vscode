@@ -1,0 +1,5 @@
+Open Sauce Food VS Code extension
+Copyright (c) 2026 Tebla and Open Sauce Food contributors.
+Grammar, configuration and test/tooling code: MIT (LICENSES/MIT.txt).
+README and authored sample encoding: CC BY 4.0 (LICENSES/CC-BY-4.0.txt).
+No Core implementation, culinary data, third-party recipes or brand assets are bundled.

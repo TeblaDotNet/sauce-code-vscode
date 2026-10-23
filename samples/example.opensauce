@@ -1,0 +1,41 @@
+::recipe
+name: Example
+serves: 2
+source: https://example.org/recipe#original
+
+::ingredients
+(flour; plain) !250g
+(egg: yolk) 2
+(gin; London dry @ ~Beefeater) 50ml
+(cocktail bitters @ !Peychaud's) 0.5g
+(sugar) ~10g
+(water) ~~100ml
+
+::equipment
+(mixing bowl)
+(oven)
+
+::instructions
+{dough} = (flour) + (egg: yolk)
+{dough} <mix, in (mixing bowl)>
+    <rest, 20m>
+{cake} <bake, 180C> ?= golden brown
+Optional [
+    {dough} + (sugar)
+]
+Meanwhile [
+    (water) <heat, 1m>
+]
+Repeat [
+    {dough} <mix>
+]
+until smooth
+(flour) 1 1/2 cups / 250g
+(water) 3 tbsp / 1 tsp
+(gin) -OR- (water)
+# example comment
+
+::source
+<<<
+Original source: (not a token) <raw text> # not a comment
+>>>

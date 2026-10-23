@@ -1,0 +1,8 @@
+node_modules/**
+tests/**
+tools/**
+package-lock.json
+pnpm-lock.yaml
+.gitignore
+.vscodeignore
+pnpm-workspace.yaml
