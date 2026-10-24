@@ -1,8 +1,10 @@
 node_modules/**
 tests/**
 tools/**
+src/**
 package-lock.json
 pnpm-lock.yaml
 .gitignore
 .vscodeignore
 pnpm-workspace.yaml
+tsconfig.json

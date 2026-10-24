@@ -1,5 +1,7 @@
 Open Sauce Food VS Code extension
 Copyright (c) 2026 Tebla and Open Sauce Food contributors.
-Grammar, configuration and test/tooling code: MIT (LICENSES/MIT.txt).
+Grammar, configuration, client and test/tooling code: MIT (LICENSES/MIT.txt).
 README and authored sample encoding: CC BY 4.0 (LICENSES/CC-BY-4.0.txt).
-No Core implementation, culinary data, third-party recipes or brand assets are bundled.
+Bundled Core parser/model/vocabulary code is MIT; project-owned generated semantic data is CC0 1.0.
+Third-party runtime dependencies retain their own notices in THIRD-PARTY-LICENSES; see THIRD-PARTY-NOTICES.md.
+No Corpus recipes, brand assets or Site presentation are bundled.

@@ -35,10 +35,10 @@ test('product punctuation is not interpreted as variant/quantity precision',asyn
  assert.ok(has(rows,'Maker: reserve; 12','string.unquoted.product.opensauce'));
  assert.ok(has(rows,'~~100ml','constant.numeric.value.opensauce'));
 });
-test('language configuration and manifest remain declarative',()=>{
+test('language configuration survives LSP activation',()=>{
  const pkg=require('../package.json'),config=require('../language-configuration.json');
  assert.equal(pkg.contributes.languages[0].id,'opensauce');assert.deepEqual(pkg.contributes.languages[0].extensions,['.opensauce']);
- assert.equal(pkg.main,undefined);assert.equal(pkg.dependencies,undefined);assert.equal(config.comments.lineComment,'#');
+ assert.equal(pkg.main,'./dist/extension.cjs');assert.equal(pkg.dependencies,undefined);assert.equal(config.comments.lineComment,'#');
  assert.ok(!config.autoClosingPairs.some(p=>p.open==='<'));
  assert.ok(new RegExp(config.indentationRules.increaseIndentPattern).test('Optional ['));
  assert.ok(new RegExp(config.indentationRules.decreaseIndentPattern).test('    ]'));

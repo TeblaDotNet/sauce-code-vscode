@@ -2,14 +2,14 @@
 
 Sauce Code is plain text: you can write and keep `.opensauce` recipes in any editor. This optional extension adds file recognition as **Sauce Code**, TextMate syntax highlighting, # comment toggling, bracket matching, surrounding pairs and basic group indentation.
 
-Version 0.1.0 is declarative only. It provides no validation, parser diagnostics, autocomplete, hover knowledge or live preview. It requires neither a separate Core installation nor Node/npm at runtime.
+Version 0.2.0 adds Core-backed autocomplete through a bundled, editor-independent Sauce Code language server. It provides no diagnostics, hover, navigation, formatting or live preview. VS Code supplies the Node runtime: no separate Node, Core or server installation is needed.
 
 ## Local installation
 
-In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.1.0.vsix`, or:
+In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.2.0.vsix`, or:
 
 ```sh
-code --install-extension "/path/to/open-sauce-food-0.1.0.vsix"
+code --install-extension "/path/to/open-sauce-food-0.2.0.vsix"
 ```
 
 Open `samples/example.opensauce`; the language indicator should read **Sauce Code**. Try Default Dark+ and Default Light+.
@@ -43,12 +43,28 @@ Raw source is highlighted only within the unindented `<<<` / `>>>` fence under `
 
 ## Development
 
-The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. This version was checked against Core commit `21a20f8`. The authored sample is illustrative, not culinary advice or an imported recipe.
+The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. Completion uses the pinned Core commit `ce601f0039a84f00f8809a1618cbb145fad47c9b` (Processes & Equipment v1). The authored sample is illustrative, not culinary advice or an imported recipe.
 
-Install development tools with `pnpm install --ignore-scripts`, run `pnpm test`, then `pnpm package`. The packaging script writes to `../_work/vscode-extension/` (create it first). Only development tooling uses Node. VSCE signing installation scripts are unnecessary for unsigned local VSIX packaging.
+Install development tools with `pnpm install --ignore-scripts`, run `pnpm test`, then `pnpm package`. The packaging script writes to `../_work/vscode-extension/` (create it first). Development requires Node.js 24+; the installed extension uses VS Code’s bundled runtime. Build the sibling `language-server` with `pnpm build`, then run `pnpm build` and `pnpm check` here before packaging. The extension build verifies and copies the server artifact; it never falls back to a global Core installation. VSCE signing installation scripts are unnecessary for unsigned local VSIX packaging.
 
 Tests use the real VS Code TextMate and Oniguruma engines. Optional `OSF_CORPUS` enables representative corpus checks; those files are read in place and never bundled. `tools/test-host.cjs` is an optional VS Code extension-host test, excluded from the VSIX.
 
 ## Attribution
 
-Copyright 2026 Tebla and Open Sauce Food contributors. Grammar/configuration/tooling: MIT. README and sample encoding: CC BY 4.0, following Core's licence scopes; see LICENSE and LICENSES. No logos, source recipes or culinary knowledge are copied into the extension.
+Copyright 2026 Tebla and Open Sauce Food contributors. Grammar/configuration/tooling: MIT. README and sample encoding: CC BY 4.0, following Core's licence scopes; see LICENSE and LICENSES. No logos or source recipes are bundled. A generated semantic vocabulary snapshot and Core parser/resolver are bundled with their original licences; see THIRD-PARTY-NOTICES.md.
+
+## Autocomplete
+
+Open a `.opensauce` file; the language server activates automatically. Type `<jul` in instructions for actions, or `(mix` under `::equipment` for equipment. Under `::ingredients`, existing ingredient names and aliases are offered as assistance, never a list of permitted ingredients. Unknown names remain valid. Use Ctrl+Space to request completion manually.
+
+In instruction parentheses, locally declared equipment and ingredients rank first. A role such as `flour bowl` remains `flour bowl`; it is not renamed to a canonical bowl. Since parentheses can denote either domain, global fallback candidates include both with domain labels. Canonical/alias matches deduplicate by identity and results are capped at 60, refreshing as you type. Generic actions remain available even without a reference page.
+
+Incomplete brackets work. Comments, raw-source payloads, metadata/prose, qualifiers, parts, variants, product labels and malformed/ambiguous contexts do not receive suggestions. Completion changes only the name when explicitly accepted; it does not close brackets, reformat recipes or publish diagnostics. Existing TextMate highlighting still determines colours.
+
+The VSIX bundles one server, one semantic vocabulary snapshot and all runtime dependencies, using VS Code’s extension-host Node process. No dependency installation or network access occurs at runtime. Standalone stdio operation and future Neovim setup are documented in the sibling language-server repository; Neovim integration is not claimed.
+
+## Validation and package inspection
+
+Run `pnpm test` for existing TextMate/configuration checks; set `OSF_CORPUS` for the real-recipe cases. `tools/test-host.cjs` tests installed-package activation and completion as well as existing editor behaviour in an isolated VS Code profile. It requires `OSF_EXTENSION_TEST_ROOT` for evidence and `OSF_CORPUS` for representative files. Package inspection must reject source trees, test fixtures, node_modules, Core YAML and duplicate knowledge snapshots. See `tools/inspect-vsix.cjs`.
+
+VS Code may independently offer word-based suggestions in comments or raw text. Those are editor suggestions, not Sauce Code language-server results; this extension does not change that preference.

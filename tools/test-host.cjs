@@ -6,9 +6,12 @@ exports.run=async()=>{
  const root=process.env.OSF_EXTENSION_TEST_ROOT;
  const ext=vscode.extensions.getExtension('tebla-local.open-sauce-food');
  assert.ok(ext,'Installed extension missing');
- assert.equal(ext.packageJSON.main,undefined);
+ assert.equal(ext.packageJSON.main,'./dist/extension.cjs');
  const doc=await vscode.workspace.openTextDocument(vscode.Uri.file(path.join(ext.extensionPath,'samples/example.opensauce')));
  assert.equal(doc.languageId,'opensauce');
+ const activationDeadline=Date.now()+10000;
+ while(!ext.isActive){if(Date.now()>activationDeadline)throw Error('Automatic onLanguage activation timed out');await new Promise(resolve=>setTimeout(resolve,25));}
+ assert.equal(ext.isActive,true);
  for(const theme of ['Default Dark+','Default Light+']){
   await vscode.workspace.getConfiguration('workbench').update('colorTheme',theme,vscode.ConfigurationTarget.Global);
   const scratch=await vscode.workspace.openTextDocument({language:'opensauce',content:'(flour)'});
@@ -36,5 +39,23 @@ exports.run=async()=>{
  assert.equal(real.languageId,'opensauce');
  }
  await vscode.workspace.getConfiguration('workbench').update('colorTheme','Default Dark+',vscode.ConfigurationTarget.Global);
- fs.writeFileSync(path.join(root,'host-test-result.json'),JSON.stringify({passed:true,language:doc.languageId,themes:['Default Dark+','Default Light+'],checks:['installed package','comments','parenthesis auto-close','angle no-auto-close','group indentation','real corpus language detection'],extensionPath:ext.extensionPath},null,2));
+ const cases=[
+ ['::instructions\n<jul','julienne'],
+ ['::equipment\n(mix','mixing bowl'],
+ ['::equipment\n(flour bowl)\n::instructions\n(fl','flour bowl'],
+ ['::ingredients\n(cour','courgette'],
+ ['::instructions\n<put','put'],
+ ['::instructions\n# <jul',null],
+ ['::source\n<<<\n::instructions\n<jul',null]
+ ];
+ for(let i=0;i<cases.length;i++){
+  const [text,expected]=cases[i],file=path.join(root,'completion-'+i+'.opensauce');fs.writeFileSync(file,text);
+  const d=await vscode.workspace.openTextDocument(vscode.Uri.file(file));assert.equal(d.languageId,'opensauce');
+  await vscode.window.showTextDocument(d);const before=d.getText();
+  const result=await vscode.commands.executeCommand('vscode.executeCompletionItemProvider',d.uri,d.positionAt(text.length));
+  const labels=(result?.items??[]).filter(x=>/^(process:|equipment:|ingredient:|Declared )/.test(x.detail??'')).map(x=>typeof x.label==='string'?x.label:x.label.label);
+  if(expected){assert.ok(labels.includes(expected),JSON.stringify({text,expected,labels}));if(expected==='flour bowl')assert.equal(labels[0],expected);}else assert.deepEqual(labels,[]);
+  assert.equal(d.getText(),before,'Request must not edit document');
+ }
+ fs.writeFileSync(path.join(root,'host-test-result.json'),JSON.stringify({passed:true,language:doc.languageId,themes:['Default Dark+','Default Light+'],checks:['installed package','automatic onLanguage activation','comments','parenthesis auto-close','angle no-auto-close','group indentation','real corpus language detection','installed bundled LSP completion: actions, equipment, local roles, ingredients, generic aliases','comments and raw source suppressed','completion requests do not edit documents'],extensionPath:ext.extensionPath},null,2));
 };
