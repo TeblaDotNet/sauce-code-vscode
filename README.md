@@ -2,14 +2,14 @@
 
 Sauce Code is plain text: you can write and keep `.opensauce` recipes in any editor. This optional extension adds file recognition as **Sauce Code**, TextMate syntax highlighting, # comment toggling, bracket matching, surrounding pairs and basic group indentation.
 
-Version 0.2.0 adds Core-backed autocomplete through a bundled, editor-independent Sauce Code language server. It provides no diagnostics, hover, navigation, formatting or live preview. VS Code supplies the Node runtime: no separate Node, Core or server installation is needed.
+Version 0.3.0 adds Core-backed autocomplete through a bundled, editor-independent Sauce Code language server. It provides no diagnostics, hover, navigation, formatting or live preview. VS Code supplies the Node runtime: no separate Node, Core or server installation is needed.
 
 ## Local installation
 
-In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.2.0.vsix`, or:
+In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.3.0.vsix`, or:
 
 ```sh
-code --install-extension "/path/to/open-sauce-food-0.2.0.vsix"
+code --install-extension "/path/to/open-sauce-food-0.3.0.vsix"
 ```
 
 Open `samples/example.opensauce`; the language indicator should read **Sauce Code**. Try Default Dark+ and Default Light+.
@@ -43,7 +43,7 @@ Raw source is highlighted only within the unindented `<<<` / `>>>` fence under `
 
 ## Development
 
-The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. Completion uses the pinned Core commit `ce601f0039a84f00f8809a1618cbb145fad47c9b` (Processes & Equipment v1). The authored sample is illustrative, not culinary advice or an imported recipe.
+The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. Completion uses the pinned Core commit `2d94d35ef5e8c5c2e7bfcabb36efe452e5587728` (integrated knowledge enrichment and equipment/process expansion). The authored sample is illustrative, not culinary advice or an imported recipe.
 
 Install development tools with `pnpm install --ignore-scripts`, run `pnpm test`, then `pnpm package`. The packaging script writes to `../_work/vscode-extension/` (create it first). Development requires Node.js 24+; the installed extension uses VS Code’s bundled runtime. Build the sibling `language-server` with `pnpm build`, then run `pnpm build` and `pnpm check` here before packaging. The extension build verifies and copies the server artifact; it never falls back to a global Core installation. VSCE signing installation scripts are unnecessary for unsigned local VSIX packaging.
 
@@ -68,3 +68,15 @@ The VSIX bundles one server, one semantic vocabulary snapshot and all runtime de
 Run `pnpm test` for existing TextMate/configuration checks; set `OSF_CORPUS` for the real-recipe cases. `tools/test-host.cjs` tests installed-package activation and completion as well as existing editor behaviour in an isolated VS Code profile. It requires `OSF_EXTENSION_TEST_ROOT` for evidence and `OSF_CORPUS` for representative files. Package inspection must reject source trees, test fixtures, node_modules, Core YAML and duplicate knowledge snapshots. See `tools/inspect-vsix.cjs`.
 
 VS Code may independently offer word-based suggestions in comments or raw text. Those are editor suggestions, not Sauce Code language-server results; this extension does not change that preference.
+
+## Upgrade from v0.2.0
+
+Install the locally built open-sauce-food-0.3.0.vsix over v0.2.0 using Install
+from VSIX or code --install-extension /path/to/open-sauce-food-0.3.0.vsix.
+The publisher/extension identity is unchanged. Reload VS Code when prompted.
+
+This version bundles Language Server 0.2.0 and Core
+2d94d35ef5e8c5c2e7bfcabb36efe452e5587728: 969 identities (414 ingredients,
+255 equipment, 300 processes/actions). For example, pasta extruder and velvet
+are now available. Highlighting, editing and completion rules are unchanged.
+No separate runtime or standalone executable is needed by the VSIX.

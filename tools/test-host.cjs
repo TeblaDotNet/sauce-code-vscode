@@ -41,6 +41,8 @@ exports.run=async()=>{
  await vscode.workspace.getConfiguration('workbench').update('colorTheme','Default Dark+',vscode.ConfigurationTarget.Global);
  const cases=[
  ['::instructions\n<jul','julienne'],
+ ['::instructions\n<velv','velvet'],
+ ['::equipment\n(pasta extr','pasta extruder'],
  ['::equipment\n(mix','mixing bowl'],
  ['::equipment\n(flour bowl)\n::instructions\n(fl','flour bowl'],
  ['::ingredients\n(cour','courgette'],
