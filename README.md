@@ -1,4 +1,4 @@
-# Open Sauce Food for VS Code
+# Sauce Code for VS Code
 
 Sauce Code is plain text: you can write and keep `.opensauce` recipes in any editor. This optional extension adds file recognition as **Sauce Code**, TextMate syntax highlighting, # comment toggling, bracket matching, surrounding pairs and basic group indentation.
 
@@ -45,7 +45,7 @@ Raw source is highlighted only within the unindented `<<<` / `>>>` fence under `
 
 The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. Completion uses the pinned Core commit `8cf1de9af9742db231999d3ff088468f2d3e43e2` (canonical-only Stage 4B Core). The authored sample is illustrative, not culinary advice or an imported recipe.
 
-Install development tools with `pnpm install --ignore-scripts`, run `pnpm test`, then `pnpm package`. The packaging script writes to `../_work/vscode-extension/` (create it first). Development requires Node.js 24+; the installed extension uses VS Code’s bundled runtime. Build the sibling `language-server` with `pnpm build`, then run `pnpm build` and `pnpm check` here before packaging. The extension build verifies and copies the server artifact; it never falls back to a global Core installation. VSCE signing installation scripts are unnecessary for unsigned local VSIX packaging.
+Install development tools with `pnpm install --ignore-scripts`, run `pnpm test`, then `pnpm package`. The packaging script writes to `../_work/vscode-extension/` (create it first). Development requires Node.js 24+; the installed extension uses VS Code’s bundled runtime. Build the exact pinned sibling `language-server` in the isolated layout described below with `pnpm build`, then run `pnpm build` and `pnpm check` here before packaging. The extension build verifies and copies the server artifact; it never falls back to a global Core installation. VSCE signing installation scripts are unnecessary for unsigned local VSIX packaging.
 
 Tests use the real VS Code TextMate and Oniguruma engines. Optional `OSF_CORPUS` enables representative corpus checks; those files are read in place and never bundled. `tools/test-host.cjs` is an optional VS Code extension-host test, excluded from the VSIX.
 
@@ -84,3 +84,11 @@ No separate runtime or standalone executable is needed by the VSIX.
 ## Stage 5 ownership boundary
 
 The 0.3.1 patch keeps the extension identifier and editing behaviour unchanged. It bundles Language Server 0.2.1 built against canonical-only Core 8cf1de9. All 969 identities remain available, independently of article availability. No Open Sauce Food Knowledge checkout, articles, photographs, measurements or browsing taxonomy are loaded. server-input.json pins the exact server source revision, bundle and snapshot hashes and canonical digest. Future optional knowledge hovers are outside this release. Angle-bracket auto-closing remains intentionally unchanged.
+
+## Project boundaries and contributions
+
+Sauce Code is the language and tooling; Open Sauce Food is the culinary encyclopaedia and recipe collection built using it. Existing opensauce commands, filetype and extension identifiers remain unchanged. Knowledge is optional and is not loaded for editor completion. See the [seven-repository setup map](../core/docs/ecosystem.md), [contribution and AI-development disclosure](../core/CONTRIBUTING.md#development-process), and this repository's [licence scopes](LICENSE). Code review and culinary review are separate.
+
+### Pinned build prerequisite
+
+The build reads ../language-server/dist and checks every field in server-input.json, not merely the server version. Stage 5.5 server HEAD differs from the approved Stage 5 input. To reproduce a VSIX, use an isolated sibling layout with language-server checked out at server-input.json serverSourceRevision, install its locked dependencies and run pnpm build there, then build/package this extension alongside it. Do not overwrite a working sibling, edit pins to make a build pass, or assume current sibling HEAD is interchangeable. The existing packaged VSIX installation does not require this development setup.
