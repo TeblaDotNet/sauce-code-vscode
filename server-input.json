@@ -1,0 +1,10 @@
+{
+  "coreCommit": "8cf1de9af9742db231999d3ff088468f2d3e43e2",
+  "serverVersion": "0.2.1",
+  "serverSourceRevision": "db2cceb613dbfad2dcd30d03c0d78f36c2346e13",
+  "sourceHash": "76d556c71b63f6a7a84369ab9eaee1a205552ba3baa179a9ba978557c848b5c2",
+  "snapshotSha256": "ce541abe1561fb44844ae248755330a85a281695e582a88653042fe392413de2",
+  "canonicalDigest": "20f61b876c2d966e04f9b145343297e728bc9cd8488af2f245f326d3c704a046",
+  "serverSha256": "6cb9881dd6bb43c8a9a2c749d0aac303ece81d9b71cc52c2f3167c8d13ee3c97",
+  "trackedChanges": false
+}

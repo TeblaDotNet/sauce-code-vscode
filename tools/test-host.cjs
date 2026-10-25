@@ -6,6 +6,10 @@ exports.run=async()=>{
  const root=process.env.OSF_EXTENSION_TEST_ROOT;
  const ext=vscode.extensions.getExtension('tebla-local.open-sauce-food');
  assert.ok(ext,'Installed extension missing');
+ assert.equal(ext.packageJSON.version,'0.3.1');
+ const info=JSON.parse(fs.readFileSync(path.join(ext.extensionPath,'server/build-info.json'))),pin=JSON.parse(fs.readFileSync(path.join(ext.extensionPath,'server-input.json')));for(const [key,value]of Object.entries(pin))assert.equal(info[key],value,key);
+ assert.equal(info.coreCommit,'8cf1de9af9742db231999d3ff088468f2d3e43e2');
+ assert.equal(info.canonicalDigest,'20f61b876c2d966e04f9b145343297e728bc9cd8488af2f245f326d3c704a046');
  assert.equal(ext.packageJSON.main,'./dist/extension.cjs');
  const doc=await vscode.workspace.openTextDocument(vscode.Uri.file(path.join(ext.extensionPath,'samples/example.opensauce')));
  assert.equal(doc.languageId,'opensauce');

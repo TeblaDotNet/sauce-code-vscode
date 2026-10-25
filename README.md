@@ -2,14 +2,14 @@
 
 Sauce Code is plain text: you can write and keep `.opensauce` recipes in any editor. This optional extension adds file recognition as **Sauce Code**, TextMate syntax highlighting, # comment toggling, bracket matching, surrounding pairs and basic group indentation.
 
-Version 0.3.0 adds Core-backed autocomplete through a bundled, editor-independent Sauce Code language server. It provides no diagnostics, hover, navigation, formatting or live preview. VS Code supplies the Node runtime: no separate Node, Core or server installation is needed.
+Version 0.3.1 adds Core-backed autocomplete through a bundled, editor-independent Sauce Code language server. It provides no diagnostics, hover, navigation, formatting or live preview. VS Code supplies the Node runtime: no separate Node, Core or server installation is needed.
 
 ## Local installation
 
-In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.3.0.vsix`, or:
+In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.3.1.vsix`, or:
 
 ```sh
-code --install-extension "/path/to/open-sauce-food-0.3.0.vsix"
+code --install-extension "/path/to/open-sauce-food-0.3.1.vsix"
 ```
 
 Open `samples/example.opensauce`; the language indicator should read **Sauce Code**. Try Default Dark+ and Default Light+.
@@ -43,7 +43,7 @@ Raw source is highlighted only within the unindented `<<<` / `>>>` fence under `
 
 ## Development
 
-The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. Completion uses the pinned Core commit `2d94d35ef5e8c5c2e7bfcabb36efe452e5587728` (integrated knowledge enrichment and equipment/process expansion). The authored sample is illustrative, not culinary advice or an imported recipe.
+The canonical language is maintained in [Core SPEC.md](https://github.com/TeblaDotNet/open-sauce-food/blob/main/SPEC.md), not in this grammar. Completion uses the pinned Core commit `8cf1de9af9742db231999d3ff088468f2d3e43e2` (canonical-only Stage 4B Core). The authored sample is illustrative, not culinary advice or an imported recipe.
 
 Install development tools with `pnpm install --ignore-scripts`, run `pnpm test`, then `pnpm package`. The packaging script writes to `../_work/vscode-extension/` (create it first). Development requires Node.js 24+; the installed extension uses VS Code’s bundled runtime. Build the sibling `language-server` with `pnpm build`, then run `pnpm build` and `pnpm check` here before packaging. The extension build verifies and copies the server artifact; it never falls back to a global Core installation. VSCE signing installation scripts are unnecessary for unsigned local VSIX packaging.
 
@@ -61,7 +61,7 @@ In instruction parentheses, locally declared equipment and ingredients rank firs
 
 Incomplete brackets work. Comments, raw-source payloads, metadata/prose, qualifiers, parts, variants, product labels and malformed/ambiguous contexts do not receive suggestions. Completion changes only the name when explicitly accepted; it does not close brackets, reformat recipes or publish diagnostics. Existing TextMate highlighting still determines colours.
 
-The VSIX bundles one server, one semantic vocabulary snapshot and all runtime dependencies, using VS Code’s extension-host Node process. No dependency installation or network access occurs at runtime. Standalone stdio operation and future Neovim setup are documented in the sibling language-server repository; Neovim integration is not claimed.
+The VSIX bundles one server, one semantic vocabulary snapshot and all runtime dependencies, using VS Code’s extension-host Node process. No dependency installation or network access occurs at runtime. Standalone stdio operation and Neovim setup are documented in the sibling language-server repository; native Neovim validation is recorded in the server validation report.
 
 ## Validation and package inspection
 
@@ -71,12 +71,16 @@ VS Code may independently offer word-based suggestions in comments or raw text. 
 
 ## Upgrade from v0.2.0
 
-Install the locally built open-sauce-food-0.3.0.vsix over v0.2.0 using Install
-from VSIX or code --install-extension /path/to/open-sauce-food-0.3.0.vsix.
+Install the locally built open-sauce-food-0.3.1.vsix over v0.2.0 using Install
+from VSIX or code --install-extension /path/to/open-sauce-food-0.3.1.vsix.
 The publisher/extension identity is unchanged. Reload VS Code when prompted.
 
-This version bundles Language Server 0.2.0 and Core
-2d94d35ef5e8c5c2e7bfcabb36efe452e5587728: 969 identities (414 ingredients,
+This version bundles Language Server 0.2.1 and Core
+8cf1de9af9742db231999d3ff088468f2d3e43e2: 969 identities (414 ingredients,
 255 equipment, 300 processes/actions). For example, pasta extruder and velvet
 are now available. Highlighting, editing and completion rules are unchanged.
 No separate runtime or standalone executable is needed by the VSIX.
+
+## Stage 5 ownership boundary
+
+The 0.3.1 patch keeps the extension identifier and editing behaviour unchanged. It bundles Language Server 0.2.1 built against canonical-only Core 8cf1de9. All 969 identities remain available, independently of article availability. No Open Sauce Food Knowledge checkout, articles, photographs, measurements or browsing taxonomy are loaded. server-input.json pins the exact server source revision, bundle and snapshot hashes and canonical digest. Future optional knowledge hovers are outside this release. Angle-bracket auto-closing remains intentionally unchanged.
