@@ -4,6 +4,8 @@ Syntax highlighting and autocomplete for `.opensauce` recipes in Visual Studio C
 
 The extension recognises Sauce Code files, highlights ingredients and actions, supports comments and brackets, and suggests names as you type. It works with your usual VS Code theme.
 
+**Related repositories:** [Sauce Code Core](https://github.com/TeblaDotNet/sauce-code) · [Language Server](https://github.com/TeblaDotNet/sauce-code-language-server) · [Recipes](https://github.com/TeblaDotNet/open-sauce-food-corpus) · [Vim/Neovim](https://github.com/TeblaDotNet/sauce-code-vim)
+
 ## Install
 
 Download `sauce-code-vscode-v0.3.1.vsix` from the [Releases page](https://github.com/TeblaDotNet/sauce-code-vscode/releases/latest). In VS Code, choose **Extensions → … → Install from VSIX…** and select it. Or use:
