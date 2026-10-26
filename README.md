@@ -6,16 +6,18 @@ Version 0.3.1 includes autocomplete backed by Sauce Code Core. The language serv
 
 ## Install
 
-In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.3.1.vsix`, or:
+Download the VSIX and verify its checksum from [GitHub Releases](https://github.com/TeblaDotNet/sauce-code-vscode/releases/latest).
+
+In VS Code use **Extensions → … → Install from VSIX…** and select `sauce-code-vscode-v0.3.1.vsix`, or:
 
 ```sh
-code --install-extension "/path/to/open-sauce-food-0.3.1.vsix"
+code --install-extension "/path/to/sauce-code-vscode-v0.3.1.vsix"
 ```
 
 Open `samples/example.opensauce`; the language indicator should read **Sauce Code**. Try Default Dark+ and Default Light+.
 Uninstall through Extensions, or run `code --uninstall-extension tebla-local.open-sauce-food`.
 
-The publisher identifier `tebla-local` is for local packaging only, not a claimed Marketplace identity. Nothing has been published.
+The identifier remains `tebla-local.open-sauce-food`; this GitHub release is not a Marketplace publication. Install later GitHub VSIX updates manually.
 
 ## Highlighting and editing
 
@@ -71,8 +73,8 @@ VS Code may independently offer word-based suggestions in comments or raw text. 
 
 ## Updating an earlier installation
 
-Install the locally built open-sauce-food-0.3.1.vsix over v0.2.0 using Install
-from VSIX or code --install-extension /path/to/open-sauce-food-0.3.1.vsix.
+Install the downloaded sauce-code-vscode-v0.3.1.vsix over v0.2.0 using Install
+from VSIX or code --install-extension /path/to/sauce-code-vscode-v0.3.1.vsix.
 The publisher/extension identity is unchanged. Reload VS Code when prompted.
 
 This version bundles Language Server 0.2.1 and Core
@@ -91,6 +93,6 @@ Sauce Code is the language and tooling; Open Sauce Food is the culinary encyclop
 
 ### Pinned build prerequisite
 
-The build reads ../language-server/dist and checks every field in server-input.json, not merely the server version. Stage 7A explicitly updates the pin to integrated server 543cf070ed49ff45281c82fc587ab040dcb07bcc; the validated canonical-only Core pin remains 8cf1de9. To reproduce a VSIX, use an isolated sibling layout with language-server checked out at server-input.json serverSourceRevision, install its locked dependencies and run pnpm build there, then build/package this extension alongside it. Do not overwrite a working sibling, edit pins to make a build pass, or assume current sibling HEAD is interchangeable. The existing packaged VSIX installation does not require this development setup.
+The build reads ../language-server/dist and checks every field in server-input.json, not merely the server version. Stage 7A explicitly updates the pin to integrated server 543cf070ed49ff45281c82fc587ab040dcb07bcc; the validated canonical-only Core pin remains 8cf1de9. To reproduce a VSIX, use an isolated sibling layout with language-server checked out at server-input.json serverSourceRevision, use the approved Windows CRLF checkout (core.autocrlf=true) because the source pin hashes file bytes, install its locked dependencies and run pnpm build there, then build/package this extension alongside it. Do not overwrite a working sibling, edit pins to make a build pass, or assume current sibling HEAD is interchangeable. The existing packaged VSIX installation does not require this development setup.
 
 Contributor paths above refer to sibling source checkouts, not resources inside the installed VSIX. Public links above use the verified Stage 7B destinations. The installed extension remains self-contained.
