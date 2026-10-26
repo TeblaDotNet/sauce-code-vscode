@@ -60,5 +60,13 @@
     "untrustedWorkspaces": {
       "supported": true
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TeblaDotNet/sauce-code-vscode.git"
+  },
+  "homepage": "https://github.com/TeblaDotNet/sauce-code-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/TeblaDotNet/sauce-code-vscode/issues"
   }
 }
