@@ -1,10 +1,10 @@
 # Sauce Code for VS Code
 
-Sauce Code is plain text: you can write and keep `.opensauce` recipes in any editor. This optional extension adds file recognition as **Sauce Code**, TextMate syntax highlighting, # comment toggling, bracket matching, surrounding pairs and basic group indentation.
+You can write `.opensauce` recipes in any text editor. This VS Code extension adds Sauce Code file recognition, syntax highlighting, `#` comment toggling, bracket matching, surrounding pairs and simple indentation.
 
-Version 0.3.1 adds Core-backed autocomplete through a bundled, editor-independent Sauce Code language server. It provides no diagnostics, hover, navigation, formatting or live preview. VS Code supplies the Node runtime: no separate Node, Core or server installation is needed.
+Version 0.3.1 includes autocomplete backed by Sauce Code Core. The language server is bundled with the extension, so you don't need to install Node.js or Core separately. Diagnostics, hover information, navigation, formatting and live preview are not supported yet.
 
-## Local installation
+## Install
 
 In VS Code use **Extensions → … → Install from VSIX…** and select `open-sauce-food-0.3.1.vsix`, or:
 
@@ -19,7 +19,7 @@ The publisher identifier `tebla-local` is for local packaging only, not a claime
 
 ## Highlighting and editing
 
-Themes choose all colours; no website palette or theme is installed.
+Colours come from your VS Code theme, not from Open Sauce Food's website.
 
 | Concept | Scope |
 |---|---|
@@ -63,13 +63,13 @@ Incomplete brackets work. Comments, raw-source payloads, metadata/prose, qualifi
 
 The VSIX bundles one server, one semantic vocabulary snapshot and all runtime dependencies, using VS Code’s extension-host Node process. No dependency installation or network access occurs at runtime. Standalone stdio operation and Neovim setup are documented in the sibling language-server repository; native Neovim validation is recorded in the server validation report.
 
-## Validation and package inspection
+## Tests and package checks
 
 Run `pnpm test` for existing TextMate/configuration checks; set `OSF_CORPUS` for the real-recipe cases. `tools/test-host.cjs` tests installed-package activation and completion as well as existing editor behaviour in an isolated VS Code profile. It requires `OSF_EXTENSION_TEST_ROOT` for evidence and `OSF_CORPUS` for representative files. Package inspection must reject source trees, test fixtures, node_modules, Core YAML and duplicate knowledge snapshots. See `tools/inspect-vsix.cjs`.
 
 VS Code may independently offer word-based suggestions in comments or raw text. Those are editor suggestions, not Sauce Code language-server results; this extension does not change that preference.
 
-## Upgrade from v0.2.0
+## Updating an earlier installation
 
 Install the locally built open-sauce-food-0.3.1.vsix over v0.2.0 using Install
 from VSIX or code --install-extension /path/to/open-sauce-food-0.3.1.vsix.
@@ -81,11 +81,11 @@ This version bundles Language Server 0.2.1 and Core
 are now available. Highlighting, editing and completion rules are unchanged.
 No separate runtime or standalone executable is needed by the VSIX.
 
-## Stage 5 ownership boundary
+## What the extension bundles
 
-The 0.3.1 patch keeps the extension identifier and editing behaviour unchanged. It bundles Language Server 0.2.1 built against canonical-only Core 8cf1de9. All 969 identities remain available, independently of article availability. No Open Sauce Food Knowledge checkout, articles, photographs, measurements or browsing taxonomy are loaded. server-input.json pins the exact server source revision, bundle and snapshot hashes and canonical digest. Future optional knowledge hovers are outside this release. Angle-bracket auto-closing remains intentionally unchanged.
+Version 0.3.1 keeps the same extension ID and editing behaviour. It includes Language Server 0.2.1 and a canonical-only Core vocabulary with 969 entries, regardless of whether Open Sauce Food has articles for them. Articles, photographs, measurements and browsing taxonomy are not bundled. `server-input.json` pins the server revision, bundle, snapshot hashes and canonical digest. Hover information based on optional Knowledge data is future work; angle brackets still do not auto-close.
 
-## Project boundaries and contributions
+## Project and contributions
 
 Sauce Code is the language and tooling; Open Sauce Food is the culinary encyclopaedia and recipe collection built using it. Existing opensauce commands, filetype and extension identifiers remain unchanged. Knowledge is optional and is not loaded for editor completion. See the seven-repository setup map (`../core/docs/ecosystem.md`), contribution and AI-development disclosure (`../core/CONTRIBUTING.md#development-process`), and this repository's licence scopes (`LICENSE`). Code review and culinary review are separate.
 
